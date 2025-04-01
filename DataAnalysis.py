@@ -199,3 +199,113 @@ plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
 plt.savefig(os.path.join(figures_folder, 'MH_Correlation.png'), dpi=300)
 plt.close()
+
+
+
+
+# Analysis for birth weight categories
+def categorize_birth_weight(birth_weight):
+    if pd.isna(birth_weight):
+        return 'Unknown'
+    elif birth_weight > 4500:
+        return 'High Birth Weight'
+    elif 1 < birth_weight < 2500:
+        return 'Low Birth Weight'
+    else:
+        return 'Normal Birth Weight'
+
+df['Birth Weight Category'] = df['Average Birth Weight (grams)'].apply(categorize_birth_weight)
+
+# Group by race and birth weight category
+category_counts = df.groupby(['Mothers Single Race 6', 'Birth Weight Category']).size().reset_index(name='Count')
+
+# Bar plot: Count of each birth weight category by race
+plt.figure(figsize=(14, 7))
+sns.barplot(
+    x='Mothers Single Race 6',
+    y='Count',
+    hue='Birth Weight Category',
+    data=category_counts,
+    palette='Set2'
+)
+
+plt.title("Birth Weight Categories by Mother's Race", fontsize=16)
+plt.xlabel("Mother's Race", fontsize=14)
+plt.ylabel("Count", fontsize=14)
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig(os.path.join(figures_folder, 'BirthWeight_Categories_by_Race.png'), dpi=300)
+plt.close()
+
+
+# Create a new column for birth weight categories
+def categorize_birth_weight(birth_weight):
+    if pd.isna(birth_weight):
+        return 'Unknown'
+    elif birth_weight > 4500:
+        return 'High Birth Weight'
+    elif  1 < birth_weight < 2500:
+        return 'Low Birth Weight'
+    else:
+        return 'Normal Birth Weight'
+
+df['Birth Weight Category'] = df['Average Birth Weight (grams)'].apply(categorize_birth_weight)
+
+# Filter out rows with "Not Available" and "Not Reported"
+df_filtered = df[~df['Mothers Single Race 6'].isin(['Not Available', 'Not Reported'])]
+
+
+# Set up the categories
+categories = ['Low Birth Weight', 'Normal Birth Weight', 'High Birth Weight']
+
+# Create separate bar plots for each birth weight category
+for category in categories:
+    category_data = df_filtered[df_filtered['Birth Weight Category'] == category]
+    
+    # Group by race and count the occurrences of each category
+    category_counts = category_data.groupby('Mothers Single Race 6').size().reset_index(name='Count')
+    
+    # Create a bar plot for the current category
+    plt.figure(figsize=(14, 7))
+    sns.barplot(
+        x='Mothers Single Race 6',
+        y='Count',
+        data=category_counts,
+        palette='Set2'
+    )
+    
+    # Title and labels
+    plt.title(f"{category} by Mother's Race", fontsize=16)
+    plt.xlabel("Mother's Race", fontsize=14)
+    plt.ylabel("Count", fontsize=14)
+    plt.xticks(rotation=45, ha='right')
+    
+    # Save the plot
+    plt.tight_layout()
+    plt.savefig(os.path.join(figures_folder, f'{category.replace(" ", "_")}_by_Race.png'), dpi=300)
+    plt.close()
+
+
+# Group by birth weight category and race, then count the occurrences
+category_counts = df_filtered.groupby(['Birth Weight Category', 'Mothers Single Race 6']).size().reset_index(name='Count')
+
+# Create the bar plot
+plt.figure(figsize=(14, 7))
+sns.barplot(
+    x='Birth Weight Category',
+    y='Count',
+    hue='Mothers Single Race 6',
+    data=category_counts,
+    palette='Set2'
+)
+
+# Title and labels
+plt.title("Birth Weight Categories by Race", fontsize=16)
+plt.xlabel("Birth Weight Category", fontsize=14)
+plt.ylabel("Count", fontsize=14)
+plt.xticks(rotation=0)  # No rotation needed for x-axis labels
+
+# Save the plot
+plt.tight_layout()
+plt.savefig(os.path.join(figures_folder, 'BirthWeight_Categories_by_Race_ColorCoded.png'), dpi=300)
+plt.close()
