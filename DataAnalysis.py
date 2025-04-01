@@ -167,3 +167,35 @@ else:
     print("\nNot enough valid data for post-hoc tests")
 
 print("\nAnalysis complete. All visualizations saved to:", figures_folder)
+
+
+#5. Correlation Heatmap (with validated variables)
+heatmap_vars = [
+    'Average Birth Weight (grams)',
+    'Average Age of Mother (years)',
+    'Average Pre-pregnancy BMI',
+    'Average OE Gestational Age (weeks)',
+    'Average Number of Prenatal Visits'
+]
+
+# Filter to only include columns with valid data
+valid_vars = [col for col in heatmap_vars if col in df.columns and df[col].notna().any()]
+
+plt.figure(figsize=(10, 8))
+sns.heatmap(
+    df[valid_vars].corr(),
+    annot=True,
+    cmap='coolwarm',
+    fmt=".2f",
+    vmin=-1,
+    vmax=1,
+    center=0,
+    linewidths=0.5,
+    annot_kws={"size": 10},
+    square=True
+)
+plt.title("Correlation Matrix of Maternal Health Factors (Clean Data)", fontsize=14, pad=20)
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig(os.path.join(figures_folder, 'MH_Correlation.png'), dpi=300)
+plt.close()
