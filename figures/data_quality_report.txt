@@ -1,0 +1,43 @@
+MATERNAL HEALTH DATA QUALITY REPORT
+==================================================
+Total records: 2,362
+
+COLUMN SUMMARY:
+
+Average Birth Weight (grams):
+  - Missing: 0
+  - Mean: 3557.4
+  - Median: 3600.0
+  - Range: 2500.0 to 5000.0
+
+Average Age of Mother (years):
+  - Missing: 0
+  - Mean: 30.9
+  - Median: 31.0
+  - Range: 18.0 to 46.0
+
+Average Pre-pregnancy BMI:
+  - Missing: 0
+  - Mean: 29.0
+  - Median: 28.8
+  - Range: 16.0 to 40.0
+
+Average OE Gestational Age (weeks):
+  - Missing: 0
+  - Mean: 38.7
+  - Median: 38.8
+  - Range: 33.5 to 41.5
+
+Average Number of Prenatal Visits:
+  - Missing: 0
+  - Mean: 9.7
+  - Median: 10.3
+  - Range: 1.0 to 20.0
+
+Average Interval Since Last Live Birth (months):
+  - Missing: 0
+  - Mean: 52.7
+  - Median: 51.7
+  - Range: 8.0 to 120.0
+
+SUSPICIOUS PATTERNS:
